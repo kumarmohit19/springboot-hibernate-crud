@@ -45,9 +45,8 @@ public class AppConfig implements WebMvcConfigurer {
 		dataSource.setPassword(env.getProperty("jdbc.password"));
 
 		// set database connection props
-
+	
 		// set connection pool props
-
 		return dataSource;
 	}
 

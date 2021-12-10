@@ -14,5 +14,43 @@ import com.spring.project.entity.User;
 @Repository
 public class UserDao {
 
+  @Autowired
+  private SessionFactory factory;
+
+	public void savePerson(User user) {
+    getSession().save(user);
+	}
+
+	public List<User> getPersons() {
+		return getSession().createCriteria(User.class).list();
+	}
+
+	public void deletePerson(int id) {
+    Session session= getSession();
+    session.delete(session.get(User.class, id));
+	}
+
+	public void updatePerson(int id) {
+    Session session= getSession();
+    session.update(session.get(User.class, id));
+	}
+
+	public User getPerson(int id) {
+    User user= null;
+		try {
+      user =  (User) getSession().get(User.class, id);
+    } catch (Exception e) {
+      System.out.println("no user found");
+    }
+    return user;
+	}
+
+  private Session getSession() {
+		Session session = factory.getCurrentSession();
+		if(session == null) {
+			session= factory.openSession();
+		} 
+		return session;
+	}
 	
 }
